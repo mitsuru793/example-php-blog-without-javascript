@@ -1,8 +1,9 @@
 parameters:
   level: max
-  memory-limit: 300M
   autoload_files:
   paths:
+    - %rootDir%/../../../config
+    - %rootDir%/../../../public/index.php
     - %rootDir%/../../../src
     - %rootDir%/../../../tests
   excludes_analyse:

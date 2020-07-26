@@ -6,6 +6,7 @@
       "start": "cd public; php -S localhost:8000",
       "test": "phpunit --color=always",
       "analyze": "phpstan analyze $(git diff --diff-filter=ACMR --name-only --find-renames=0% $(git merge-base origin/master HEAD))",
+      "analyze:master": "phpstan analyze",
       "fix": "php-cs-fixer fix ."
     },
     "require": {
