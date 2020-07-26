@@ -1,0 +1,37 @@
+<?php
+/**
+ * @var \League\Plates\Template $v
+ * @var \Php\Domain\User\User|null $loginUser
+ */
+?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <span class="navbar-brand mb-0 h1">Blog</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <?php if (is_null($loginUser)): ?>
+            <form action="/login" method="post" class="form-inline my-2 my-lg-0">
+                <label class="sr-only" for="loginUserName">Username</label>
+                <input type="text" class="form-control mr-sm-2" id="loginUserName" placeholder="Username" name="userName">
+
+                <label class="sr-only" for="loginPassword">Password</label>
+                <input type="text" class="form-control mr-sm-2" id="loginPassword" placeholder="Password" name="password">
+
+                <button class="btn btn-primary" type="submit">Log in</button>
+            </form>
+        <?php else: ?>
+            <p>login user: <?= $loginUser->name ?></p>
+            <form action="/logout" method="post" class="form-inline my-2 my-lg-0">
+                <button class="btn mb-2" type="submit">Logout</button>
+            </form>
+        <?php endif ?>
+    </div>
+</nav>
