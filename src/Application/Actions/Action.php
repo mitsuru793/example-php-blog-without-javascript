@@ -16,6 +16,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
+use Slim\Flash\Messages;
 
 abstract class Action
 {
@@ -37,9 +38,12 @@ abstract class Action
     /** @var array */
     protected $args;
 
-    public function __construct(Engine $templates)
+    protected Messages $flash;
+
+    public function __construct(Engine $templates, Messages $flash)
     {
         $this->templates = $templates;
+        $this->flash = $flash;
     }
 
     /**
@@ -106,7 +110,10 @@ abstract class Action
 
     protected function renderView(Response $response, string $template, array $data = []): Response
     {
-        $data = array_merge($data, ['loginUser' => $this->loginUser]);
+        $data = array_merge($data, [
+            'loginUser' => $this->loginUser,
+            'errors' => $this->flash->getMessage('errors') ?? []
+        ]);
         $output = $this->templates->render($template, $data);
         $response->getBody()->write($output);
         return $response;

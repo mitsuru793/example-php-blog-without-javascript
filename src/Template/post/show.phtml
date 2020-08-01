@@ -2,24 +2,25 @@
 $v->layout('layouts/default')
 
 /**
- * @var \Php\Domain\User\User|null $loginUser
- * @var \Php\Domain\Post\Post $post
+ * @var \Php\Domain\Post\Post|null $post
  */
 ?>
-<div class="row">
-    <h1><?= $post->title ?></h1>
-</div>
-<div class="row">
-    <a href="/posts/<?=$post->id?>/edit">Edit</a>
-</div>
-<div class="row">
-    <p>Author: <?= $post->author->name ?></p>
-</div>
-<div class="row">
-    <?php foreach ($post->tags as $tag): ?>
-        <span class="badge badge-primary ml-1"><?= $tag->name ?></span>
-    <?php endforeach ?>
-</div>
-<div class="row">
-    <p><?= $post->content ?></p>
-</div>
+<?php if (!is_null($post)):  ?>
+    <div class="row">
+        <h1><?= $post->title ?></h1>
+    </div>
+    <div class="row">
+        <a href="/posts/<?=$post->id?>/edit">Edit</a>
+    </div>
+    <div class="row">
+        <p>Author: <?= $post->author->name ?></p>
+    </div>
+    <div class="row">
+        <?php foreach ($post->tags as $tag): ?>
+            <span class="badge badge-primary ml-1"><?= $tag->name ?></span>
+        <?php endforeach ?>
+    </div>
+    <div class="row">
+        <p><?= $post->content ?></p>
+    </div>
+<?php endif ?>

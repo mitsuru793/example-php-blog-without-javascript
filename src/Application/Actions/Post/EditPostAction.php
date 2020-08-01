@@ -9,6 +9,7 @@ use Php\Domain\Post\PostTransformer;
 use Php\Domain\Tag\TagRepository;
 use Php\Domain\User\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Flash\Messages;
 
 final class EditPostAction extends PostAction
 {
@@ -20,9 +21,9 @@ final class EditPostAction extends PostAction
 
     private TagRepository $tagRepo;
 
-    public function __construct(Engine $templates, PostRepository $postRepo, PostTransformer $postTransformer, UserRepository $userRepository, TagRepository $tagRepo)
+    public function __construct(Engine $templates, Messages $flash, PostRepository $postRepo, PostTransformer $postTransformer, UserRepository $userRepository, TagRepository $tagRepo)
     {
-        parent::__construct($templates);
+        parent::__construct($templates, $flash);
         $this->userRepository = $userRepository;
         $this->postRepo = $postRepo;
         $this->postTransformer = $postTransformer;

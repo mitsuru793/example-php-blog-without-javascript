@@ -9,6 +9,7 @@ use Php\Domain\Post\PostTransformer;
 use Php\Domain\Tag\TagRepository;
 use Php\Domain\User\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Flash\Messages;
 
 final class ShowPostAction extends PostAction
 {
@@ -20,9 +21,9 @@ final class ShowPostAction extends PostAction
 
     private TagRepository $tagRepo;
 
-    public function __construct(Engine $templates, PostRepository $postRepo, PostTransformer $postTransformer, UserRepository $userRepository, TagRepository $tagRepo)
+    public function __construct(Engine $templates, Messages $flash, PostRepository $postRepo, PostTransformer $postTransformer, UserRepository $userRepository, TagRepository $tagRepo)
     {
-        parent::__construct($templates);
+        parent::__construct($templates, $flash);
         $this->userRepository = $userRepository;
         $this->postRepo = $postRepo;
         $this->postTransformer = $postTransformer;
@@ -37,8 +38,8 @@ final class ShowPostAction extends PostAction
         $postId = (int)$this->resolveArg('postId');
         $post = $this->postRepo->find($postId);
         if (is_null($post)) {
-            // TODO add flash message
-            return $this->redirectBack($this->request, $this->response);
+            $this->flash->addMessage('errors', 'Not found post.');
+            return $this->renderView($this->response, 'post/show', compact('post'));
         }
         $post = $this->tagRepo->findByPost($post);
 
