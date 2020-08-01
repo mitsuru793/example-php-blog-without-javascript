@@ -34,7 +34,6 @@ final class EditPostAction extends PostAction
      */
     protected function action(): Response
     {
-        $loginUser = $this->userRepository->find(1);
         $postId = (int)$this->resolveArg('postId');
         $post = $this->postRepo->find($postId);
         $post = $this->tagRepo->findByPost($post);
